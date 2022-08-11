@@ -1,0 +1,127 @@
+#include<stdio.h>
+#include<stdlib.h>
+
+struct node
+{
+	int iData;
+	struct node *psNext;
+};
+
+typedef struct node NODE;
+
+NODE *psRoot = NULL;
+
+void append(int iData)
+{
+	NODE *psTemp1 = (NODE *)malloc(sizeof(NODE));
+	psTemp1->iData = iData;
+	psTemp1->psNext = NULL;
+	
+	if(psRoot == NULL)
+	{
+		psRoot = psTemp1;
+	}
+	else
+	{
+		NODE *psTemp2 = psRoot;
+		while(psTemp2->psNext != NULL)
+		{
+			psTemp2 = psTemp2->psNext;
+		}	
+		psTemp2->psNext = psTemp1;
+	}
+}
+
+unsigned int display(char cDispFlag)
+{
+	unsigned int uiCount = 0;
+	if(psRoot == NULL)
+	{
+		return uiCount;
+	}
+	else
+	{
+		NODE *psTemp1 = psRoot;
+		while(psTemp1 != NULL)
+		{
+			uiCount++;
+			if( cDispFlag == 'Y')
+				printf("[%d]\n",psTemp1->iData);
+			psTemp1 = psTemp1->psNext;
+		}
+	}
+	if(cDispFlag == 'Y')
+		printf("*******\n");
+	return uiCount;
+}
+
+void reverse()
+{
+	unsigned int i=0,j=display('N'),k=0;
+	int iTemp = 0;
+	NODE *psTemp1 = psRoot,*psTemp2 = psRoot;
+	
+	while(i<j-1)
+	{
+		k=0;
+		while(k<j-1)
+		{
+			psTemp1 = psTemp1->psNext;
+			k++;
+		}	
+		i++;
+		j--;
+		iTemp = psTemp1->iData;
+		psTemp1->iData = psTemp2->iData;
+		psTemp2->iData = iTemp;
+		psTemp2 = psTemp2->psNext;
+		psTemp1 = psRoot;
+		
+	}
+}
+
+void delete(unsigned int uiPos)
+{
+	if( psRoot == NULL || 
+	    uiPos <= 0 ||
+            uiPos > display('N'))
+	{
+		printf("Error\n");
+	}
+	else if(uiPos == 1)
+	{
+		NODE *psTemp1 = psRoot;
+		psRoot = psTemp1->psNext;
+		psTemp1->psNext = NULL;
+		free(psTemp1);
+	}
+	else 
+	{
+		NODE *psTemp1 = psRoot,*psTemp2=NULL;
+		unsigned int i = 1;
+		while(i<uiPos-1)
+		{
+			psTemp1 = psTemp1->psNext;
+			i++;
+		}
+		psTemp2 = psTemp1->psNext;
+		psTemp1->psNext = psTemp2->psNext;
+		psTemp2->psNext = NULL;
+		free(psTemp2);
+		
+	}
+}
+
+void main()
+{
+	append(100);
+	append(200);
+	append(300);
+	display('Y');
+	reverse();
+	display('Y');
+	delete(3);
+	display('Y');
+
+
+}

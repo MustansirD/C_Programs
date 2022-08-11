@@ -1,0 +1,7 @@
+Item,Quantity,Unit,PricePerUnit
+Jam,10,KG,100
+Milk,50,LTR,100
+Bread,50,PACKET,20
+Rice,500,KG,80
+Wheat,400,KG,50
+Sugar,300,KG,40

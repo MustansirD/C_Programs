@@ -1,0 +1,3 @@
+milk 12 0
+jam 3 0
+bread 23 0
